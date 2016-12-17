@@ -1,3 +1,9 @@
+/*!
+ * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-writer/graphs/contributors
+ * @url http://glayzzle.com/php-writer
+ */
+
 var parser = require('php-parser');
 var unparser = require('php-unparser');
 
