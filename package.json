@@ -1,0 +1,23 @@
+{
+  "name": "php-writer",
+  "version": "1.0.0",
+  "description": "Update PHP scripts from their AST",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glayzzle/php-writer.git"
+  },
+  "author": "Ioan CHIRIAC",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/glayzzle/php-writer/issues"
+  },
+  "homepage": "https://github.com/glayzzle/php-writer#readme",
+  "dependencies": {
+    "php-parser": "^0.1.4",
+    "php-unparser": "^0.1.3"
+  }
+}
