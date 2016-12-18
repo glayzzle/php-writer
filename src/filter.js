@@ -18,6 +18,10 @@ module.exports = function filter(ast, type, match) {
       switch(ast[0]) {
         case 'program': return filter(ast[1], type, match);
         case 'namespace': return filter(ast[2], type, match);
+        case 'doc': return filter(ast[2], type, match);
+        case 'comment': return filter(ast[2], type, match);
+        case 'position': return filter(ast[3], type, match);
+        case 'function': return filter(ast[3], type, match);
       }
     } else {
       // scan each child node
