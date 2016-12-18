@@ -5,13 +5,14 @@
  * @param {Function} match
  * @return {Array}
  */
-module.exports = function filter(ast, type, match) {
+var filter = function filter(ast, type, match) {
   if (Array.isArray(ast)) {
     if (typeof ast[0] === 'string') {
       // handle checks
       if (ast[0] === type) {
-        if (match(ast)) {
-          return ast;
+        var node = match(ast);
+        if (node) {
+          return node;
         }
       }
       // scan from node type
@@ -25,7 +26,14 @@ module.exports = function filter(ast, type, match) {
       }
     } else {
       // scan each child node
+      for(var i = 0; i < ast.length; i++) {
+        var node = filter(ast[i], type, match);
+        if (node) {
+          return node;
+        }
+      }
     }
   }
   return null;
 };
+module.exports = filter;

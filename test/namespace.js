@@ -10,10 +10,17 @@ describe('Namespaces', function() {
       '}'
     ].join('\n'));
     var fooNs;
+
     it('should find foo', function () {
       fooNs = test.findNamespace('foo');
       fooNs.should.be.Object();
     });
+
+    it('should change name', function() {
+      fooNs.setName('foo/bar');
+      test.findNamespace('foo/bar').should.be.Object();
+    });
+
   });
 
 });

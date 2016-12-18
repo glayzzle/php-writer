@@ -8,15 +8,15 @@ var Class = function(ast) {
   this.ast = ast;
 };
 
-Class.property.setName = function(name) {
+Class.prototype.setName = function(name) {
   return this;
 };
 
-Class.property.setExtends = function(name) {
+Class.prototype.setExtends = function(name) {
 
 };
 
-Class.property.setImplements = function(names) {
+Class.prototype.setImplements = function(names) {
 
 };
 
@@ -43,4 +43,4 @@ Class.locate = function(ast, name) {
 
 };
 
-module.exports = cls;
+module.exports = Class;

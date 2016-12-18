@@ -5,6 +5,7 @@
  */
 
 var Class = require('./class');
+var filter = require('./filter');
 
 var Namespace = function(ast) {
   this.ast = ast;
@@ -16,7 +17,7 @@ var Namespace = function(ast) {
  * @return {namespace}
  */
 Namespace.prototype.setName = function(name) {
-  this.ast[1] = name.trim('\\').split('\\');
+  this.ast[1] = name.trim('/').split('/');
   return this;
 };
 
@@ -49,7 +50,11 @@ Namespace.prototype.setCode = function(code) {
 };
 
 Namespace.locate = function(ast, name) {
-
+  return filter(ast, 'namespace', function(node) {
+    if (node[1].join('/') === name) {
+      return new Namespace(node);
+    }
+  });
 };
 
 module.exports = Namespace;

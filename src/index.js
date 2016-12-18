@@ -6,13 +6,18 @@
 
 var parser = require('php-parser');
 var unparser = require('php-unparser');
+var Namespace = require('./namespace');
 
 var writer = function(buffer) {
-  this.ast = parser.parseCode(buffer);
+  this.ast = parser.parseCode(buffer, {
+    parser: {
+      extractDoc: true
+    }
+  });
 };
 
-writer.prototype.findNamespace = function() {
-
+writer.prototype.findNamespace = function(name) {
+  return Namespace.locate(this.ast, name);
 };
 
 writer.prototype.findFunction = function() {
@@ -31,8 +36,12 @@ writer.prototype.findInterface = function() {
 
 };
 
+/**
+ * Convert back AST to php code
+ * @return {String}
+ */
 writer.prototype.toString = function() {
-  return unparser(this.ast);
+  return '<?php\n' + unparser(this.ast);
 };
 
 module.exports = writer;
