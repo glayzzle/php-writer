@@ -1,3 +1,9 @@
+/*!
+ * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-writer/graphs/contributors
+ * @url http://glayzzle.com/php-writer
+ */
+
 /**
  * Filters the specified nodes in order to find the specified criterias
  * @param {Array} nodes

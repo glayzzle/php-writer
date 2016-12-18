@@ -1,3 +1,9 @@
+/*!
+ * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-writer/graphs/contributors
+ * @url http://glayzzle.com/php-writer
+ */
+
 var should = require('./assert');
 var writer = require('../src/index');
 
@@ -49,6 +55,14 @@ describe('Namespaces', function() {
       fooNs.ast[2].should.be.AST('const BAR = false; echo "Hello world"; const FOO = 123;');
     });
 
+  });
+
+  describe('#findClass', function() {
+    it('should create a foo class', function () {
+      fooNs.appendCode('class foo {}');
+      fooNs.findClass('foo').should.be.Object();
+      fooNs.findClass('foo').ast.should.be.AST('class foo {}');
+    });
   });
 
 });
