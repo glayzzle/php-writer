@@ -4,7 +4,7 @@
   "description": "Update PHP scripts from their AST",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- test/*"
   },
   "repository": {
     "type": "git",
