@@ -1,16 +1,17 @@
-var should = require('should');
+var should = require('./assert');
 var writer = require('../src/index');
 
 describe('Namespaces', function() {
 
-  describe('#setName', function() {
-    var test = new writer([
-      '<?php',
-      'namespace foo {',
-      '}'
-    ].join('\n'));
-    var fooNs;
+  var test = new writer([
+    '<?php',
+    'namespace foo {',
+    '\tdie();',
+    '}'
+  ].join('\n'));
+  var fooNs;
 
+  describe('#setName', function() {
     it('should find foo', function () {
       fooNs = test.findNamespace('foo');
       fooNs.should.be.Object();
@@ -19,6 +20,33 @@ describe('Namespaces', function() {
     it('should change name', function() {
       fooNs.setName('foo/bar');
       test.findNamespace('foo/bar').should.be.Object();
+    });
+
+  });
+
+  describe('#setCode', function() {
+
+    it('should set echo', function () {
+      fooNs.setCode('echo "Hello world";');
+      fooNs.ast[2].should.be.AST('echo "Hello world";');
+    });
+
+  });
+
+  describe('#appendCode', function() {
+
+    it('should add FOO = 123', function () {
+      fooNs.appendCode('const FOO = 123;');
+      fooNs.ast[2].should.be.AST('echo "Hello world"; const FOO = 123;');
+    });
+
+  });
+
+  describe('#prependCode', function() {
+
+    it('should insert BAR = false', function () {
+      fooNs.prependCode('const BAR = false;');
+      fooNs.ast[2].should.be.AST('const BAR = false; echo "Hello world"; const FOO = 123;');
     });
 
   });
