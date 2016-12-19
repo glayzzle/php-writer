@@ -6,6 +6,8 @@
 
 var Class = require('./class');
 var fn = require('./function');
+var Interface = require('./interface');
+var Trait = require('./trait');
 var filter = require('./helpers/filter');
 var editor = require('./helpers/editor');
 
@@ -27,21 +29,38 @@ Namespace.prototype.setName = function(name) {
 
 /**
  * Lookup for a class
+ * @param {String} name
+ * @return {Class|Null}
  */
 Namespace.prototype.findClass = function(name) {
   return Class.locate(this.ast[2], name);
 };
 
+/**
+ * Lookup for a function
+ * @param {String} name
+ * @return {Function|Null}
+ */
 Namespace.prototype.findFunction = function(name) {
   return fn.locate(this.ast[2], name);
 };
 
+/**
+ * Lookup for a trait
+ * @param {String} name
+ * @return {Trait|Null}
+ */
 Namespace.prototype.findTrait = function(name) {
-
+  return Trait.locate(this.ast[2], name);
 };
 
+/**
+ * Lookup for an interface
+ * @param {String} name
+ * @return {Interface|Null}
+ */
 Namespace.prototype.findInterface = function(name) {
-
+  return Interface.locate(this.ast[2], name);
 };
 
 /**
