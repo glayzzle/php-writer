@@ -30,4 +30,14 @@ should.Assertion.add(
   }, false
 );
 
+should.Assertion.add(
+  'Extend',
+  function(name) {
+    this.params = { operator: 'extend class' };
+    this.obj.should.be.Array('should contain AST');
+    this.obj[3].should.be.Array('should contain an extents Array');
+    this.obj[3].join('\\').should.be.equal(name);
+  }, false
+);
+
 module.exports = should;

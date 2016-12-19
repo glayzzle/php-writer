@@ -6,9 +6,10 @@
 
 var parser = require('php-parser');
 var Class = require('./class');
+var fn = require('./function');
 var filter = require('./helpers/filter');
 
-var Namespace = function(ast) {
+var Namespace = function Namespace(ast) {
   this.ast = ast;
 };
 
@@ -18,7 +19,7 @@ var Namespace = function(ast) {
  * @return {namespace}
  */
 Namespace.prototype.setName = function(name) {
-  this.ast[1] = name.trim('/').split('/');
+  this.ast[1] = name.trim('\\').split('\\');
   return this;
 };
 
@@ -30,7 +31,7 @@ Namespace.prototype.findClass = function(name) {
 };
 
 Namespace.prototype.findFunction = function(name) {
-
+  return fn.locate(this.ast[2], name);
 };
 
 Namespace.prototype.findTrait = function(name) {
@@ -73,7 +74,7 @@ Namespace.prototype.setCode = function(code) {
  */
 Namespace.locate = function(ast, name) {
   return filter(ast, 'namespace', function(node) {
-    if (node[1].join('/') === name) {
+    if (node[1].join('\\') === name) {
       return new Namespace(node);
     }
   });
