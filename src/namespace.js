@@ -4,14 +4,16 @@
  * @url http://glayzzle.com/php-writer
  */
 
-var parser = require('php-parser');
 var Class = require('./class');
 var fn = require('./function');
 var filter = require('./helpers/filter');
+var editor = require('./helpers/editor');
 
 var Namespace = function Namespace(ast) {
   this.ast = ast;
 };
+
+editor(Namespace, 2);
 
 /**
  * Change the current namespace name
@@ -40,33 +42,6 @@ Namespace.prototype.findTrait = function(name) {
 
 Namespace.prototype.findInterface = function(name) {
 
-};
-
-/**
- * Prepends some code at the ast body
- */
-Namespace.prototype.prependCode = function(code) {
-  var ast = parser.parseEval(code);
-  this.ast[2] = ast[1].concat(this.ast[2]);
-  return this;
-};
-
-/**
- * Appends some code at the end of the namespace body
- */
-Namespace.prototype.appendCode = function(code) {
-  var ast = parser.parseEval(code);
-  this.ast[2] = this.ast[2].concat(ast[1]);
-  return this;
-};
-
-/**
- * Replace the current namespace body
- */
-Namespace.prototype.setCode = function(code) {
-  var ast = parser.parseEval(code);
-  this.ast[2] = ast[1];
-  return this;
 };
 
 /**

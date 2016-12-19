@@ -45,5 +45,7 @@ describe('Function', function() {
     fn.ast[2][1][2].should.be.deepEqual(['constant', 'true']);
   });
 
+  
+
 
 });

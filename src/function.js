@@ -4,8 +4,9 @@
  * @url http://glayzzle.com/php-writer
  */
 
-var filter = require('./helpers/filter');
 var parser = require('php-parser');
+var filter = require('./helpers/filter');
+var editor = require('./helpers/editor');
 
 /**
  * @constructor Function
@@ -13,6 +14,7 @@ var parser = require('php-parser');
 var fn = function Function(ast) {
   this.ast = ast;
 };
+editor(fn, 6);
 
 /**
  * Changing the function name
@@ -23,7 +25,7 @@ fn.prototype.setName = function(name) {
 };
 
 /**
- * Changing the function name
+ * Changing the function arguments
  */
 fn.prototype.setArgs = function(args) {
   var ast = parser.parseEval('function a('+args+') {}');
@@ -31,9 +33,10 @@ fn.prototype.setArgs = function(args) {
   return this;
 };
 
-
 /**
  * Locate the node in the specified ast
+ * AST Offsets :
+ * name, params, isRef, use, returnType, body
  */
 fn.locate = function(ast, name) {
   return filter(ast, 'function', function(node) {
