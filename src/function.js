@@ -5,7 +5,11 @@
  */
 
 var filter = require('./helpers/filter');
+var parser = require('php-parser');
 
+/**
+ * @constructor Function
+ */
 var fn = function Function(ast) {
   this.ast = ast;
 };
@@ -17,6 +21,16 @@ fn.prototype.setName = function(name) {
   this.ast[1] = name;
   return this;
 };
+
+/**
+ * Changing the function name
+ */
+fn.prototype.setArgs = function(args) {
+  var ast = parser.parseEval('function a('+args+') {}');
+  this.ast[2] = ast[1][0][2];
+  return this;
+};
+
 
 /**
  * Locate the node in the specified ast
