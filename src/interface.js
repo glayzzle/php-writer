@@ -1,5 +1,5 @@
 /*!
- * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
@@ -23,7 +23,7 @@ Interface.prototype.setName = function(name) {
  */
 Interface.locate = function(ast, name) {
   return filter(ast, 'interface', function(node) {
-    if (node[1] === name) {
+    if (node.name === name) {
       return new Interface(node);
     }
   });

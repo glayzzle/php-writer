@@ -4,7 +4,8 @@
   "description": "Update PHP scripts from their AST",
   "main": "src/index.js",
   "scripts": {
-    "test": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- test/*"
+      "test": "node --stack-size=50 node_modules/mocha/bin/_mocha -- test/*",
+      "cover": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- test/*"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,8 @@
   },
   "homepage": "https://github.com/glayzzle/php-writer#readme",
   "dependencies": {
-    "php-parser": "^0.1.4",
-    "php-unparser": "^0.1.3"
+    "php-parser": "^2.0.0-pre4",
+    "php-unparser": "git://github.com/glayzzle/php-unparser.git"
   },
   "devDependencies": {
     "coveralls": "^2.11.15",

@@ -1,5 +1,5 @@
 /*!
- * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
@@ -15,7 +15,7 @@ var Namespace = function Namespace(ast) {
   this.ast = ast;
 };
 
-editor(Namespace, 2);
+editor(Namespace, 'editor');
 
 /**
  * Change the current namespace name
@@ -23,7 +23,7 @@ editor(Namespace, 2);
  * @return {namespace}
  */
 Namespace.prototype.setName = function(name) {
-  this.ast[1] = name.trim('\\').split('\\');
+  this.ast.name = name;
   return this;
 };
 
@@ -33,7 +33,7 @@ Namespace.prototype.setName = function(name) {
  * @return {Class|Null}
  */
 Namespace.prototype.findClass = function(name) {
-  return Class.locate(this.ast[2], name);
+  return Class.locate(this.ast.children, name);
 };
 
 /**
@@ -42,7 +42,7 @@ Namespace.prototype.findClass = function(name) {
  * @return {Function|Null}
  */
 Namespace.prototype.findFunction = function(name) {
-  return fn.locate(this.ast[2], name);
+  return fn.locate(this.ast.children, name);
 };
 
 /**
@@ -51,7 +51,7 @@ Namespace.prototype.findFunction = function(name) {
  * @return {Trait|Null}
  */
 Namespace.prototype.findTrait = function(name) {
-  return Trait.locate(this.ast[2], name);
+  return Trait.locate(this.ast.children, name);
 };
 
 /**
@@ -60,7 +60,7 @@ Namespace.prototype.findTrait = function(name) {
  * @return {Interface|Null}
  */
 Namespace.prototype.findInterface = function(name) {
-  return Interface.locate(this.ast[2], name);
+  return Interface.locate(this.ast.children, name);
 };
 
 /**
@@ -68,7 +68,7 @@ Namespace.prototype.findInterface = function(name) {
  */
 Namespace.locate = function(ast, name) {
   return filter(ast, 'namespace', function(node) {
-    if (node[1].join('\\') === name) {
+    if (node.name === name) {
       return new Namespace(node);
     }
   });

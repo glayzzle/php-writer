@@ -12,34 +12,30 @@
  * @return {Array}
  */
 var filter = function filter(ast, type, match) {
-  if (Array.isArray(ast)) {
-    if (typeof ast[0] === 'string') {
-      // handle checks
-      if (ast[0] === type) {
-        var node = match(ast);
-        if (node) {
-          return node;
+    var result;
+    if (Array.isArray(ast)) {
+        for(var i = 0; i < ast.length; i++) {
+            result = filter(ast[i], type, match);
+            if (result) {
+                return result;
+            }
         }
-      }
-      // scan from node type
-      switch(ast[0]) {
-        case 'program': return filter(ast[1], type, match);
-        case 'namespace': return filter(ast[2], type, match);
-        case 'doc': return filter(ast[2], type, match);
-        case 'comment': return filter(ast[2], type, match);
-        case 'position': return filter(ast[3], type, match);
-        case 'function': return filter(ast[3], type, match);
-      }
     } else {
-      // scan each child node
-      for(var i = 0; i < ast.length; i++) {
-        var node = filter(ast[i], type, match);
-        if (node) {
-          return node;
+        if (ast && ast.kind && ast.kind === type) {
+            result = match(ast);
+            if (result) {
+                return result;
+            }
         }
-      }
+        for(var k in ast) {
+            if (ast.hasOwnProperty(k) && ast[k] !== ast) {
+                result = filter(ast[k], type, match);
+                if (result) {
+                    return result;
+                }
+            }
+        }
     }
-  }
-  return null;
+    return null;
 };
 module.exports = filter;

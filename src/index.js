@@ -1,5 +1,5 @@
 /*!
- * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
@@ -32,7 +32,7 @@ editor(Writer, 1);
  * @return {Namespace|Null}
  */
 Writer.prototype.findNamespace = function(name) {
-  return Namespace.locate(this.ast, name);
+  return Namespace.locate(this.ast.children, name);
 };
 
 /**
@@ -58,7 +58,7 @@ Writer.prototype.nsLocator = function(name) {
 Writer.prototype.findClass = function(name) {
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findClass(ns[0]);
-  return Class.locate(this.ast, ns[0]);
+  return Class.locate(this.ast.children, ns[0]);
 };
 
 /**
@@ -69,7 +69,7 @@ Writer.prototype.findClass = function(name) {
 Writer.prototype.findFunction = function(name) {
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findFunction(ns[0]);
-  return fn.locate(this.ast, ns[0]);
+  return fn.locate(this.ast.children, ns[0]);
 };
 
 /**
@@ -79,7 +79,7 @@ Writer.prototype.findFunction = function(name) {
 Writer.prototype.findTrait = function(name) {
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findTrait(ns[0]);
-  return Trait.locate(this.ast, ns[0]);
+  return Trait.locate(this.ast.children, ns[0]);
 };
 
 /**
@@ -89,7 +89,7 @@ Writer.prototype.findTrait = function(name) {
 Writer.prototype.findInterface = function(name) {
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findInterface(ns[0]);
-  return Interface.locate(this.ast, ns[0]);
+  return Interface.locate(this.ast.children, ns[0]);
 };
 
 /**
@@ -97,7 +97,10 @@ Writer.prototype.findInterface = function(name) {
  * @return {String}
  */
 Writer.prototype.toString = function() {
-  return '<?php\n' + unparser(this.ast);
+  return '<?php\n' + unparser(this.ast, {
+    forceNamespaceBrackets: true,
+    shortArray: false
+  });
 };
 
 module.exports = Writer;

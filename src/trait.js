@@ -18,7 +18,7 @@ var Trait = function(ast) {
  * @return {Trait}
  */
 Trait.prototype.setName = function(name) {
-  this.ast[1] = name;
+  this.ast.name = name;
   return this;
 };
 
@@ -27,7 +27,7 @@ Trait.prototype.setName = function(name) {
  */
 Trait.locate = function(ast, name) {
   return filter(ast, 'trait', function(node) {
-    if (node[1] === name) {
+    if (node.name === name) {
       return new Trait(node);
     }
   });

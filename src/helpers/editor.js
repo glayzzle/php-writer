@@ -11,14 +11,14 @@ var parser = require('php-parser');
  * @param {Integer} bodyIndex
  * @return void
  */
-module.exports = function(obj, bodyIndex) {
+module.exports = function(obj, property) {
 
   /**
    * Prepends some code at the ast body
    */
   obj.prototype.prependCode = function(code) {
     var ast = parser.parseEval(code);
-    this.ast[bodyIndex] = ast[1].concat(this.ast[bodyIndex]);
+    this.ast[property] = ast.children.concat(this.ast[property]);
     return this;
   };
 
@@ -27,7 +27,7 @@ module.exports = function(obj, bodyIndex) {
    */
   obj.prototype.appendCode = function(code) {
     var ast = parser.parseEval(code);
-    this.ast[bodyIndex] = this.ast[bodyIndex].concat(ast[1]);
+    this.ast[property] = this.ast[property].concat(ast.children);
     return this;
   };
 
@@ -36,7 +36,7 @@ module.exports = function(obj, bodyIndex) {
    */
   obj.prototype.setCode = function(code) {
     var ast = parser.parseEval(code);
-    this.ast[bodyIndex] = ast[1];
+    this.ast[property] = ast.children;
     return this;
   };
 
