@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/glayzzle/php-writer#readme",
   "dependencies": {
-    "php-parser": "^2.0.0-pre4",
+    "php-parser": "^2.0.0-pre7",
     "php-unparser": "git://github.com/glayzzle/php-unparser.git"
   },
   "devDependencies": {
