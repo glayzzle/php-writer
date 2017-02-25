@@ -1,8 +1,9 @@
 /*!
- * Copyright (C) 2016 Glayzzle (BSD3 License)
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
+'use strict';
 
 var parser = require('php-parser');
 var should = require('should');
