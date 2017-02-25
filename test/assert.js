@@ -21,12 +21,12 @@ should.Assertion.add(
       });
     }).should.not.throw(code);
     this.obj.should.be.Object();
-    if (typeof this.obj[0] === 'string') {
+    if (typeof this.obj.kind === 'string') {
       // just check one node
-      this.obj.should.deepEqual(ast[1][0]);
+      this.obj.should.deepEqual(ast.children[0]);
     } else {
       // check a body
-      this.obj.should.deepEqual(ast[1]);
+      this.obj.should.deepEqual(ast.children);
     }
   }, false
 );
