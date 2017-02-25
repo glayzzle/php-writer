@@ -3,6 +3,7 @@
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
+'use strict';
 
 var should = require('./assert');
 var writer = require('../src/index');
