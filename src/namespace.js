@@ -3,18 +3,23 @@
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
+'use strict';
 
 var Class = require('./class');
+var Constant = require('./class');
 var fn = require('./function');
 var Interface = require('./interface');
 var Trait = require('./trait');
 var filter = require('./helpers/filter');
 var editor = require('./helpers/editor');
 
+/**
+ * A namespace entry
+ * @constructor Namespace
+ */
 var Namespace = function Namespace(ast) {
   this.ast = ast;
 };
-
 editor(Namespace, 'editor');
 
 /**
@@ -61,6 +66,15 @@ Namespace.prototype.findTrait = function(name) {
  */
 Namespace.prototype.findInterface = function(name) {
   return Interface.locate(this.ast.children, name);
+};
+
+/**
+ * Lookup for an interface
+ * @param {String} name
+ * @return {Interface|Null}
+ */
+Namespace.prototype.findConstant = function(name) {
+  return Constant.locate(this.ast.children, name, true);
 };
 
 /**

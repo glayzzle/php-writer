@@ -3,6 +3,7 @@
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
+'use strict';
 
 var parser = require('php-parser');
 var unparser = require('php-unparser');
@@ -97,7 +98,7 @@ Writer.prototype.findInterface = function(name) {
  * @return {String}
  */
 Writer.prototype.toString = function() {
-  return '<?php\n' + unparser(this.ast, {
+  return unparser(this.ast, {
     forceNamespaceBrackets: true,
     shortArray: false
   });

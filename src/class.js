@@ -3,11 +3,14 @@
  * @authors https://github.com/glayzzle/php-writer/graphs/contributors
  * @url http://glayzzle.com/php-writer
  */
+'use strict';
 
+var parser = require('php-parser');
 var filter = require('./helpers/filter');
 var serialize = require('./helpers/serializer');
 var Method = require('./method');
 var Property = require('./property');
+var Constant = require('./constant');
 
 /**
  * @constructor
@@ -130,34 +133,29 @@ Class.prototype.setProperty = function(name, value, flags) {
 /**
  * Sets a constant value
  */
-Class.prototype.getConstant = function(name, value) {
-}
+Class.prototype.getConstant = function(name) {
+    return Constant.locate(this.ast.body, name);
+};
 
 /**
  * Sets a constant value
  */
 Class.prototype.setConstant = function(name, value) {
-
-  // scan for update existing constant
-  for(var i = 0; i < this.ast[5].constants; i++) {
-    var c = this.ast[5].constants[i];
-    if (c[0] === 'position') {
-      c = c[3];
+    var constant = this.getConstant(name);
+    if (!constant) {
+        // append the function
+        var ast = parser.parseEval('class a { \n' +
+            'const ' + name + (
+                value ? ' = ' + value : ''
+            ) + ';\n' +
+        ' }');
+        this.ast.body.unshift(
+            ast.children[0].body[0]
+        );
+    } else {
+        if (typeof value !== 'undefined') constant.setValue(value);
     }
-    if (c[0] === 'doc') {
-      c = c[2];
-    }
-    if (c[1] === name) {
-      c[2] = serialize(value);
-      return this;
-    }
-  }
-
-  // set a new constant
-  this.ast[5].constants.push([
-    'const', name, serialize(value)
-  ]);
-  return this;
+    return this;
 };
 
 /**
