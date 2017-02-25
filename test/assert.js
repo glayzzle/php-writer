@@ -20,7 +20,7 @@ should.Assertion.add(
         }
       });
     }).should.not.throw(code);
-    this.obj.should.be.Array();
+    this.obj.should.be.Object();
     if (typeof this.obj[0] === 'string') {
       // just check one node
       this.obj.should.deepEqual(ast[1][0]);
@@ -35,9 +35,9 @@ should.Assertion.add(
   'Extend',
   function(name) {
     this.params = { operator: 'extend class' };
-    this.obj.should.be.Array('should contain AST');
-    this.obj[3].should.be.Array('should contain an extents Array');
-    this.obj[3].join('\\').should.be.equal(name);
+    this.obj.should.be.Object('should contain AST');
+    (this.obj.extends === null).should.be.false('should contain an extends property');
+    this.obj.extends.name.should.be.equal(name);
   }, false
 );
 
