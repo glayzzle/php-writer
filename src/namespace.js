@@ -20,7 +20,7 @@ var editor = require('./helpers/editor');
 var Namespace = function Namespace(ast) {
   this.ast = ast;
 };
-editor(Namespace, 'editor');
+editor(Namespace, 'children');
 
 /**
  * Change the current namespace name
@@ -82,7 +82,7 @@ Namespace.prototype.findConstant = function(name) {
  */
 Namespace.locate = function(ast, name) {
   return filter(ast, 'namespace', function(node) {
-    if (node.name === name) {
+    if (node.name == name) {
       return new Namespace(node);
     }
   });

@@ -25,7 +25,7 @@ describe('Interface', function() {
 
   it('setName', function() {
     interfaceObject.setName('baz');
-    interfaceObject.ast[1].should.be.equal('baz');
+    interfaceObject.ast.name.should.be.equal('baz');
   });
 
 });

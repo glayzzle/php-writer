@@ -35,7 +35,7 @@ describe('Namespaces', function() {
 
     it('should set echo', function () {
       fooNs.setCode('echo "Hello world";');
-      fooNs.ast.body.should.be.AST('echo "Hello world";');
+      fooNs.ast.children.should.be.AST('echo "Hello world";');
     });
 
   });
@@ -44,7 +44,7 @@ describe('Namespaces', function() {
 
     it('should add FOO = 123', function () {
       fooNs.appendCode('const FOO = 123;');
-      fooNs.ast.body.should.be.AST('echo "Hello world"; const FOO = 123;');
+      fooNs.ast.children.should.be.AST('echo "Hello world"; const FOO = 123;');
     });
 
   });
@@ -53,7 +53,7 @@ describe('Namespaces', function() {
 
     it('should insert BAR = false', function () {
       fooNs.prependCode('const BAR = false;');
-      fooNs.ast.body.should.be.AST('const BAR = false; echo "Hello world"; const FOO = 123;');
+      fooNs.ast.children.should.be.AST('const BAR = false; echo "Hello world"; const FOO = 123;');
     });
 
   });
