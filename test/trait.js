@@ -24,7 +24,7 @@ describe('Trait', function() {
 
   it('setName', function() {
     traitObj.setName('baz');
-    traitObj.ast[1].should.be.equal('baz');
+    traitObj.ast.name.should.be.equal('baz');
   });
 
 });
