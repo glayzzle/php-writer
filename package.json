@@ -4,8 +4,8 @@
   "description": "Update PHP scripts from their AST",
   "main": "src/index.js",
   "scripts": {
-    "test": "node --stack-size=50 node_modules/mocha/bin/_mocha -- test/*",
-    "cover": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- test/*"
+    "test": "nyc mocha",
+    "cover": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "coveralls": "^2.11.15",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
+    "nyc": "^11.2.1",
     "should": "^13.1.0"
   }
 }
