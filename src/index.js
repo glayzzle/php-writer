@@ -15,15 +15,19 @@ var fn = require('./function');
 var Interface = require('./interface');
 var Trait = require('./trait');
 
+// Parser default options
+var defaultOptions = {
+  parser: {
+    extractDoc: true
+  }
+};
+
 /**
- * @constructor
+ * @varructor
  */
-var Writer = function(buffer) {
-  this.ast = parser.parseCode(buffer, {
-    parser: {
-      extractDoc: true
-    }
-  });
+var Writer = function(buffer, options = {}) {
+  options = Object.assign({}, defaultOptions, options);
+  this.ast = parser.parseCode(buffer, options);
 };
 editor(Writer, 1);
 
