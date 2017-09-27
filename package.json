@@ -18,13 +18,13 @@
   },
   "homepage": "https://github.com/glayzzle/php-writer#readme",
   "dependencies": {
-    "php-parser": "^2.0.0-pre7",
-    "php-unparser": "git://github.com/glayzzle/php-unparser.git"
+    "php-parser": "^2.0.7",
+    "php-unparser": "^0.2.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.15",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "should": "^11.1.2"
+    "should": "^13.1.0"
   }
 }
