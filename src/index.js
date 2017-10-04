@@ -46,8 +46,8 @@ var defaultOptions = {
  * @varructor
  */
 var Writer = function(buffer, options = {}) {
-  options = Object.assign({}, defaultOptions, options);
-  this.ast = parser.parseCode(buffer, options);
+  this.options = Object.assign({}, defaultOptions, options);
+  this.ast = parser.parseCode(buffer, this.options);
 };
 editor(Writer, 1);
 
