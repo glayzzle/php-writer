@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc mocha",
-    "cover": "nyc report --reporter=text-lcov | coveralls"
+    "cover": "nyc report --reporter=text-lcov | coveralls",
+    "docs": "jsdoc -d ./docs ./src"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "coveralls": "^2.11.15",
     "istanbul": "^0.4.5",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.2.0",
     "nyc": "^11.2.1",
     "should": "^13.1.0"

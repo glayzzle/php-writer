@@ -60,7 +60,7 @@ You can pass to the writer an options object to customize your writer instance:
 If you want to learn more about __AST__ you can [read the definitions](https://github.com/glayzzle/php-parser/blob/master/docs/AST.md).
 
 ## Examples
-All the examples assume that you have already loaded the file like in the [example](https://github.com/glayzzle/php-writer).
+All the examples assume that you have already loaded the file like in the [example](https://github.com/glayzzle/php-writer#how-does-it-works).
 
 ##### Find a function and set its body value:
 ```js
