@@ -122,10 +122,7 @@ Writer.prototype.findInterface = function(name) {
  * @return {String}
  */
 Writer.prototype.toString = function() {
-  return unparser(this.ast, {
-    forceNamespaceBrackets: true,
-    shortArray: false
-  });
+  return unparser(this.ast, this.options.writer);
 };
 
 module.exports = Writer;
