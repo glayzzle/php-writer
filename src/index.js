@@ -17,8 +17,28 @@ var Trait = require('./trait');
 
 // Parser default options
 var defaultOptions = {
+  writer: {
+    indent: true,
+    dontUseWhitespaces: false,
+    shortArray: true,
+    forceNamespaceBrackets: false,
+    bracketsNewLine: true
+  },
   parser: {
-    extractDoc: true
+    debug: false, 
+    locations: false,
+    extractDoc: true,
+    suppressErrors: false
+  },
+  lexer: {
+    all_tokens: false,
+    comment_tokens: false,
+    mode_eval: false,
+    asp_tags: false,
+    short_tags: false
+  },
+  ast: {
+    withPositions: true
   }
 };
 
