@@ -15,15 +15,39 @@ var fn = require('./function');
 var Interface = require('./interface');
 var Trait = require('./trait');
 
+// Parser default options
+var defaultOptions = {
+  writer: {
+    indent: true,
+    dontUseWhitespaces: false,
+    shortArray: true,
+    forceNamespaceBrackets: false,
+    bracketsNewLine: true
+  },
+  parser: {
+    debug: false, 
+    locations: false,
+    extractDoc: true,
+    suppressErrors: false
+  },
+  lexer: {
+    all_tokens: false,
+    comment_tokens: false,
+    mode_eval: false,
+    asp_tags: false,
+    short_tags: false
+  },
+  ast: {
+    withPositions: true
+  }
+};
+
 /**
- * @constructor
+ * @varructor
  */
-var Writer = function(buffer) {
-  this.ast = parser.parseCode(buffer, {
-    parser: {
-      extractDoc: true
-    }
-  });
+var Writer = function(buffer, options = {}) {
+  this.options = Object.assign({}, defaultOptions, options);
+  this.ast = parser.parseCode(buffer, this.options);
 };
 editor(Writer, 1);
 
@@ -98,10 +122,7 @@ Writer.prototype.findInterface = function(name) {
  * @return {String}
  */
 Writer.prototype.toString = function() {
-  return unparser(this.ast, {
-    forceNamespaceBrackets: true,
-    shortArray: false
-  });
+  return unparser(this.ast, this.options.writer);
 };
 
 module.exports = Writer;

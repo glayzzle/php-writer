@@ -31,13 +31,10 @@ describe('API', function() {
   it('findClass', function() {
     test.findClass('foo\\bar\\baz').should.be.Object();
     test.findClass('baz').should.be.Object();
-    test.findClass('baz').ast.should.Extend('foo\\bar\\baz');
   });
 
   it('findFunction', function() {
     test.findFunction('foo\\bar\\doBaz').should.be.Object();
   });
-
-
 
 });
