@@ -1,3 +1,28 @@
+## [Version 2.0.0](https://github.com/glayzzle/php-writer/releases/tag/v2.0.0) (2017-11-1)
+
+### Breaking changes
+
+- Added default writer options: [`17aa357`](https://github.com/glayzzle/php-writer/commit/17aa357)
+- Pass options to unparser: [`d8e8289`](https://github.com/glayzzle/php-writer/commit/d8e8289)
+- Save options globally: [`4f6f66c`](https://github.com/glayzzle/php-writer/commit/4f6f66c)
+
+### New features
+
+- Tests with nyc coverage: [`549b6b7`](https://github.com/glayzzle/php-writer/commit/549b6b7)
+- Updated documentation: [`498925d`](https://github.com/glayzzle/php-writer/commit/498925d)
+- Updated README.md: [`53a3070`](https://github.com/glayzzle/php-writer/commit/53a3070)
+- Added jsdoc and script to build documentation: [`568d8d0`](https://github.com/glayzzle/php-writer/commit/568d8d0)
+- Auto yarn lock file: [`bfc0607`](https://github.com/glayzzle/php-writer/commit/bfc0607)
+
+### Bug fixes
+
+- Updated dependencies to last: [`36ed323`](https://github.com/glayzzle/php-writer/commit/36ed323)
+- Added support for options: [`cc513a5`](https://github.com/glayzzle/php-writer/commit/cc513a5)
+- Changed node version to LTS: [`9983228`](https://github.com/glayzzle/php-writer/commit/9983228)
+- generate docs: [`36495cf`](https://github.com/glayzzle/php-writer/commit/36495cf)
+
+[...full changes](https://github.com/glayzzle/php-writer/compare/v1.1.0...v2.0.0)
+
 ## [Version 1.1.0](https://github.com/glayzzle/php-writer/releases/tag/v1.1.0) (2017-2-25)
 
 ### Minor Changes
