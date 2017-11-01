@@ -1399,9 +1399,9 @@ php-parser@^2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/php-parser/-/php-parser-2.0.7.tgz#b6ece4391c368517efb084263b1711616e4b4b7a"
 
-"php-unparser@github:b4dnewz/php-unparser":
-  version "0.2.2"
-  resolved "https://codeload.github.com/b4dnewz/php-unparser/tar.gz/1d671925174860250745620d088139a260803fae"
+php-unparser@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/php-unparser/-/php-unparser-0.2.3.tgz#72435d88d8ff241efe8a0f40c70766264bc6da4b"
 
 pify@^2.0.0:
   version "2.3.0"
