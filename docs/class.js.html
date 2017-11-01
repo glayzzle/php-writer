@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-writer/graphs/contributors
+ * @url http://glayzzle.com/php-writer
+ */
+'use strict';
+
+var parser = require('php-parser');
+var filter = require('./helpers/filter');
+var serialize = require('./helpers/serializer');
+var Method = require('./method');
+var Property = require('./property');
+var Constant = require('./constant');
+
+/**
+ * @constructor
+ */
+var Class = function Class(ast) {
+    this.ast = ast;
+};
+
+/**
+ * Sets the class name
+ */
+Class.prototype.setName = function(name) {
+    this.ast.name = name;
+    return this;
+};
+
+/**
+ * Extends with the specified classname
+ */
+Class.prototype.setExtends = function(name) {
+    if(name) {
+        var ast = parser.parseEval('class a extends '+name+' {}');
+        this.ast.extends = ast.children[0].extends;
+    } else {
+        this.ast.extends = null;
+    }
+    return this;
+};
+
+/**
+ * Sets a list of implementation classes
+ */
+Class.prototype.setImplements = function(names) {
+    if (Array.isArray(names)) names = names.join(', ');
+    if(names) {
+        var ast = parser.parseEval('class a implements '+names+' {}');
+        this.ast.implements = ast.children[0].implements;
+    } else {
+        this.ast.implements = null;
+    }
+    return this;
+};
+
+/**
+ * Gets a list of implemented classes
+ */
+Class.prototype.getImplements = function() {
+    var result = [];
+    if (this.ast.implements) {
+        for (var i = 0; i &lt; this.ast.implements.length; i++) {
+            result.push(
+                this.ast.implements[i].resolution === 'rn' ?
+                'namespace\\' + this.ast.implements[i].name :
+                this.ast.implements[i].name
+            );
+        }
+    }
+}
+
+/**
+ * Adds a new class implement (if not already defined)
+ */
+Class.prototype.addImplements = function(name) {
+    var list = this.getImplements();
+    if (list.indexOf(name) === -1) {
+        list.push(name);
+        this.setImplements(list);
+    }
+    return this;
+};
+
+Class.prototype.setTraits = function(names) {
+    // @todo
+};
+
+Class.prototype.getTraits = function() {
+    // @todo
+};
+
+
+Class.prototype.addTrait = function(name) {
+    var list = this.getTraits();
+    if (list.indexOf(name) === -1) {
+        list.push(name);
+        this.setTraits(list);
+    }
+    return this;
+};
+
+/**
+ * Retrieves a class property
+ */
+Class.prototype.getProperty = function(name) {
+    return Property.locate(this.ast.body, name);
+};
+
+/**
+ * Sets a property value
+ */
+Class.prototype.setProperty = function(name, value, flags) {
+
+    var property = this.getProperty(name);
+    if (!property) {
+        // append the function
+        var ast = parser.parseEval('class a { \n' +
+            flags + ' $' + name + (
+                value ? ' = ' + value : ''
+            ) + ';\n' +
+        ' }');
+        this.ast.body.unshift(
+            ast.children[0].body[0]
+        );
+    } else {
+        if (typeof flags !== 'undefined') property.setFlags(flags);
+        if (typeof value !== 'undefined') property.setValue(value);
+    }
+
+};
+
+/**
+ * Sets a constant value
+ */
+Class.prototype.getConstant = function(name) {
+    return Constant.locate(this.ast.body, name);
+};
+
+/**
+ * Sets a constant value
+ */
+Class.prototype.setConstant = function(name, value) {
+    var constant = this.getConstant(name);
+    if (!constant) {
+        // append the function
+        var ast = parser.parseEval('class a { \n' +
+            'const ' + name + (
+                value ? ' = ' + value : ''
+            ) + ';\n' +
+        ' }');
+        this.ast.body.unshift(
+            ast.children[0].body[0]
+        );
+    } else {
+        if (typeof value !== 'undefined') constant.setValue(value);
+    }
+    return this;
+};
+
+/**
+ * Lookup for a function
+ */
+Class.prototype.getMethod = function(name) {
+    return Method.locate(this.ast.body, name);
+};
+
+/**
+ * Appends or update an function
+ */
+Class.prototype.setMethod = function(name, args, body, flags) {
+    var method = this.getMethod(name);
+    if (!method) {
+        // append the function
+        var ast = parser.parseEval('class a { \n' +
+            flags + ' function ' + name + '(' + args +  ') {\n' +
+                body + '\n' +
+            '}\n' +
+        ' }');
+        this.ast.body.push(
+            ast.children[0].body[0]
+        );
+    } else {
+        // update the function
+        if (typeof flags !== 'undefined') method.setFlags(flags);
+        if (typeof args !== 'undefined') method.setArgs(args);
+        if (typeof body !== 'undefined') method.setCode(body);
+    }
+    return this;
+};
+
+/**
+ * Locate the node in the specified ast
+ */
+Class.locate = function(ast, name) {
+  return filter(ast, 'class', function(node) {
+    if (node.name === name) {
+      return new Class(node);
+    }
+  });
+};
+
+module.exports = Class;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Class.html">Class</a></li><li><a href="Constant.html">Constant</a></li><li><a href="Function.html">Function</a></li><li><a href="Interface.html">Interface</a></li><li><a href="Method.html">Method</a></li><li><a href="Namespace.html">Namespace</a></li><li><a href="Property.html">Property</a></li><li><a href="Trait.html">Trait</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Writer">Writer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 01 2017 11:58:55 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
