@@ -32,6 +32,19 @@ describe('API', function () {
     ].join('\n'));
   })
 
+  describe('#addNamespace', function() {
+    it('adds namespace to the program and returns it', function () {
+      var program = new writer('<?php class bar {}');
+      var namespace = program.addNamespace('foo');
+
+      namespace.should.be.instanceOf(Namespace);
+      
+      var klass = namespace.findClass('bar');
+
+      klass.should.be.instanceOf(Class);
+    });
+  });
+  
   describe('#findNamespace', function() {
     it('finds namespace by name', function () {
       var namespace = test.findNamespace('foo\\bar');
