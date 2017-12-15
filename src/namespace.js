@@ -13,6 +13,7 @@ var Trait = require('./trait');
 var filter = require('./helpers/filter');
 var editor = require('./helpers/editor');
 var parser = require('php-parser');
+var usegroup = require('./helpers/usegroup');
 
 /**
  * A namespace entry
@@ -38,18 +39,7 @@ Namespace.prototype.setName = function(name) {
  * @param {String}
  * @return {namespace}
  */
-Namespace.prototype.addUsegroup = function(name) {
-  var usegroup = parser.parseEval('use a;').children.shift();
-  usegroup.items[0].name = name;
-
-  var insertBefore = this.ast.children.findIndex(function (node) {
-      return node.kind !== 'usegroup';
-  });
-
-  this.ast.children.splice(insertBefore, 0, usegroup);
-
-  return this;
-} 
+Namespace.prototype.addUsegroup = usegroup.add;
 
 /**
  * Lookup for a class

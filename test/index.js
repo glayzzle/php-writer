@@ -44,6 +44,22 @@ describe('API', function () {
       klass.should.be.instanceOf(Class);
     });
   });
+
+  describe('#addUsegroup', function () {
+    it('should add usergroup to file', function () {
+      var namespace = test.findNamespace();
+      var childrenCount = namespace.ast.children.length;
+      
+      namespace.addUsegroup('bar');
+      namespace.ast.children.should.have.length(childrenCount + 1);
+      
+      namespace.addUsegroup('baz');
+      namespace.ast.children.should.have.length(childrenCount + 2);
+
+      namespace.ast.children[0].items[0].name.should.equal('bar');
+      namespace.ast.children[1].items[0].name.should.equal('baz');
+    });
+  });
   
   describe('#findNamespace', function() {
     it('finds namespace by name', function () {

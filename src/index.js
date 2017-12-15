@@ -14,6 +14,7 @@ var Class = require('./class');
 var fn = require('./function');
 var Interface = require('./interface');
 var Trait = require('./trait');
+var usegroup = require('./helpers/usegroup');
 
 // Parser default options
 var defaultOptions = {
@@ -72,6 +73,13 @@ Writer.prototype.addNamespace = function(name) {
   
   return Namespace.locate(this.ast.children, name);
 }
+
+/**
+ * Add usegroup
+ * @param {String}
+ * @return {Writer}
+ */
+Writer.prototype.addUsegroup = usegroup.add;
 
 /**
  * Finds a namespace
