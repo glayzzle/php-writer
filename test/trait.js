@@ -9,23 +9,24 @@ var should = require('./assert');
 var writer = require('../src/index');
 
 describe('Trait', function() {
-
-  var test = new writer([
-    '<?php',
-    'trait foo {',
-    '\tconst BAR = 1;',
-    '}'
-  ].join('\n'));
+  var test;
   var traitObj;
 
-  it('findTrait', function() {
+  beforeEach(function () {
+    var test = new writer([
+      '<?php',
+      'trait foo {',
+      '\tconst BAR = 1;',
+      '}'
+    ].join('\n'));
+    
     traitObj = test.findTrait('foo');
-    traitObj.should.be.Object();
   });
 
-  it('setName', function() {
-    traitObj.setName('baz');
-    traitObj.ast.name.should.be.equal('baz');
+  describe('#setName', function () {
+    it('can set name', function () {
+      traitObj.setName('baz');
+      traitObj.ast.name.should.be.equal('baz');
+    });
   });
-
 });

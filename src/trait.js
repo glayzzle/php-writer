@@ -93,7 +93,7 @@ Trait.prototype.setConstant = function(name, value) {
  */
 Trait.locate = function(ast, name) {
   return filter(ast, 'trait', function(node) {
-    if (node.name === name) {
+    if (!name || node.name === name) {
       return new Trait(node);
     }
   });

@@ -9,23 +9,33 @@ var should = require('./assert');
 var writer = require('../src/index');
 
 describe('Interface', function() {
-
-  var test = new writer([
-    '<?php',
-    'interface foo {',
-    '\tconst BAR = 1;',
-    '}'
-  ].join('\n'));
+  var test;
   var interfaceObject;
 
-  it('findInterface', function() {
+  beforeEach(function () {
+    test = new writer([
+      '<?php',
+      'interface foo {',
+      '\tconst BAR = 1;',
+      '}'
+    ].join('\n'));
+
     interfaceObject = test.findInterface('foo');
-    interfaceObject.should.be.Object();
   });
 
-  it('setName', function() {
-    interfaceObject.setName('baz');
-    interfaceObject.ast.name.should.be.equal('baz');
+  describe('#setName', function () {
+    it('can set name', function () {
+      interfaceObject.setName('baz');
+      interfaceObject.ast.name.should.be.equal('baz');  
+    });
   });
 
+  describe('#setExtends', function () {
+    it('can set extends', function () {
+      interfaceObject.setExtends(['bar', 'quux']);
+      interfaceObject.ast.extends.should.have.length(2);
+      interfaceObject.ast.extends[0].name.should.equal('bar');
+      interfaceObject.ast.extends[1].name.should.equal('quux');  
+    });
+  });
 });

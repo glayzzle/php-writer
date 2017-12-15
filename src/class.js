@@ -11,6 +11,7 @@ var serialize = require('./helpers/serializer');
 var Method = require('./method');
 var Property = require('./property');
 var Constant = require('./constant');
+var traits = require('./helpers/traits');
 
 /**
  * @constructor
@@ -44,30 +45,29 @@ Class.prototype.setExtends = function(name) {
  * Sets a list of implementation classes
  */
 Class.prototype.setImplements = function(names) {
-    if (Array.isArray(names)) names = names.join(', ');
-    if(names) {
-        var ast = parser.parseEval('class a implements '+names+' {}');
-        this.ast.implements = ast.children[0].implements;
-    } else {
-        this.ast.implements = null;
-    }
-    return this;
+  if (Array.isArray(names)) names = names.join(', ');
+  if(names) {
+    var ast = parser.parseEval('class a implements '+names+' {}');
+    this.ast.implements = ast.children[0].implements;
+  } else {
+    this.ast.implements = null;
+  }
+  return this;
 };
 
 /**
  * Gets a list of implemented classes
  */
 Class.prototype.getImplements = function() {
-    var result = [];
-    if (this.ast.implements) {
-        for (var i = 0; i < this.ast.implements.length; i++) {
-            result.push(
-                this.ast.implements[i].resolution === 'rn' ?
-                'namespace\\' + this.ast.implements[i].name :
-                this.ast.implements[i].name
-            );
-        }
-    }
+  if (!this.ast.implements) {
+    return []
+  }
+
+  return this.ast.implements.map(function (_interface) {
+    return _interface.resolution === 'rn'
+      ? 'namespace\\' + _interface.name
+      : _interface.name;
+  });
 }
 
 /**
@@ -82,23 +82,11 @@ Class.prototype.addImplements = function(name) {
     return this;
 };
 
-Class.prototype.setTraits = function(names) {
-    // @todo
-};
+Class.prototype.setTraits = traits.setTraits;
 
-Class.prototype.getTraits = function() {
-    // @todo
-};
+Class.prototype.getTraits = traits.getTraits;
 
-
-Class.prototype.addTrait = function(name) {
-    var list = this.getTraits();
-    if (list.indexOf(name) === -1) {
-        list.push(name);
-        this.setTraits(list);
-    }
-    return this;
-};
+Class.prototype.addTrait = traits.addTrait;
 
 /**
  * Retrieves a class property
@@ -194,7 +182,7 @@ Class.prototype.setMethod = function(name, args, body, flags) {
  */
 Class.locate = function(ast, name) {
   return filter(ast, 'class', function(node) {
-    if (node.name === name) {
+    if (!name || node.name === name) {
       return new Class(node);
     }
   });
