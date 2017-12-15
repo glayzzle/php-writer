@@ -35,7 +35,6 @@ Interface.prototype.setExtends = function(name) {
     return this;
 };
 
-
 /**
  * Sets a constant value
  */

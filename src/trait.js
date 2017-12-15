@@ -9,6 +9,7 @@ var parser = require('php-parser');
 var filter = require('./helpers/filter');
 var Method = require('./method');
 var Constant = require('./constant');
+var traits = require('./helpers/traits');
 
 /**
  * @constructor
@@ -58,38 +59,14 @@ Trait.prototype.setMethod = function(name, args, body, flags) {
     return this;
 };
 
+Trait.prototype.setTraits = traits.setTraits;
+
+Trait.prototype.getTraits = traits.getTraits;
+
+Trait.prototype.addTrait = traits.addTrait;
 
 /**
- * Sets a constant value
- */
-Trait.prototype.getConstant = function(name) {
-    return Constant.locate(this.ast.body, name);
-};
-
-/**
- * Sets a constant value
- */
-Trait.prototype.setConstant = function(name, value) {
-    var constant = this.getConstant(name);
-    if (!constant) {
-        // append the function
-        var ast = parser.parseEval('class a { \n' +
-            'const ' + name + (
-                value ? ' = ' + value : ''
-            ) + ';\n' +
-        ' }');
-        this.ast.body.unshift(
-            ast.children[0].body[0]
-        );
-    } else {
-        if (typeof value !== 'undefined') constant.setValue(value);
-    }
-    return this;
-};
-
-
-/**
- * @return {Interface|Null}
+ * @return {Trait|Null}
  */
 Trait.locate = function(ast, name) {
   return filter(ast, 'trait', function(node) {
