@@ -39,14 +39,14 @@ Namespace.prototype.setName = function(name) {
  * @return {namespace}
  */
 Namespace.prototype.addUsegroup = function(name) {
-  var usergroup = parser.parseEval('use a;').children.shift();
-  usergroup.items[0].name = name;
+  var usegroup = parser.parseEval('use a;').children.shift();
+  usegroup.items[0].name = name;
 
   var insertBefore = this.ast.children.findIndex(function (node) {
-      return node.kind !== 'usergroup';
+      return node.kind !== 'usegroup';
   });
 
-  this.ast.children.splice(insertBefore - 1, 0, usergroup);
+  this.ast.children.splice(insertBefore, 0, usegroup);
 
   return this;
 } 
