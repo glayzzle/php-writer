@@ -54,22 +54,21 @@ describe('Namespaces', function() {
     });
   });
 
-  // describe('#appendCode', function() {
-  //   it('should add FOO = 123', function () {
-  //     fooNs.appendCode('const FOO = 123;');
+  describe('#appendCode', function() {
+    it('should add FOO = 123', function () {
+      fooNs.setCode('echo "Hello world";');
+      fooNs.appendCode('const FOO = 123;');
+      fooNs.ast.children.should.be.AST('echo "Hello world";const FOO = 123;');
+    });
+  });
 
-  //     console.log(fooNs.ast.children);
-
-  //     fooNs.ast.children.should.be.AST('die();const FOO = 123;');
-  //   });
-  // });
-
-  // describe('#prependCode', function() {
-  //   it('should insert BAR = false', function () {
-  //     fooNs.prependCode('const BAR = false;');
-  //     fooNs.ast.children.should.be.AST('const BAR = false;die();');
-  //   });
-  // });
+  describe('#prependCode', function() {
+    it('should insert BAR = false', function () {
+      fooNs.setCode('echo "Hello world";');
+      fooNs.prependCode('const BAR = false;');
+      fooNs.ast.children.should.be.AST('const BAR = false;echo "Hello world";');
+    });
+  });
 
   describe('#findClass', function() {
     it('should create a foo class', function () {
