@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc mocha",
-    "cover": "nyc report --reporter=text-lcov | coveralls",
+    "cover": "nyc --reporter=lcov mocha && cat coverage/lcov.info | coveralls",
     "docs": "jsdoc -d ./docs ./src"
   },
   "repository": {
