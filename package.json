@@ -20,7 +20,7 @@
   "homepage": "https://github.com/glayzzle/php-writer#readme",
   "dependencies": {
     "php-parser": "^2.1.0",
-    "php-unparser": "^0.2.3"
+    "php-unparser": "git+https://github.com/Sevavietl/php-unparser.git"
   },
   "devDependencies": {
     "coveralls": "^2.11.15",

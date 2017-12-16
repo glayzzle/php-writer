@@ -12,6 +12,8 @@ var Interface = require('./interface');
 var Trait = require('./trait');
 var filter = require('./helpers/filter');
 var editor = require('./helpers/editor');
+var parser = require('php-parser');
+var usegroup = require('./helpers/usegroup');
 
 /**
  * A namespace entry
@@ -31,6 +33,13 @@ Namespace.prototype.setName = function(name) {
   this.ast.name = name;
   return this;
 };
+
+/**
+ * Add usegroup
+ * @param {String}
+ * @return {namespace}
+ */
+Namespace.prototype.addUsegroup = usegroup.add;
 
 /**
  * Lookup for a class
@@ -82,7 +91,7 @@ Namespace.prototype.findConstant = function(name) {
  */
 Namespace.locate = function(ast, name) {
   return filter(ast, 'namespace', function(node) {
-    if (node.name == name) {
+    if (!name || node.name == name) {
       return new Namespace(node);
     }
   });

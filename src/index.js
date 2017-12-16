@@ -14,6 +14,7 @@ var Class = require('./class');
 var fn = require('./function');
 var Interface = require('./interface');
 var Trait = require('./trait');
+var usegroup = require('./helpers/usegroup');
 
 // Parser default options
 var defaultOptions = {
@@ -52,6 +53,35 @@ var Writer = function(buffer, options = {}) {
 editor(Writer, 1);
 
 /**
+ * Add a namespace
+ * @param {String} name
+ * @return {Namespace|Null}
+ */
+Writer.prototype.addNamespace = function(name) {
+  if (!name) {
+    return;
+  }
+  
+  var namespace = parser.parseEval('namespace a;').children.shift();
+  namespace.name = name;
+  
+  this.ast.children.forEach(function (node) {
+      namespace.children.push(node);
+  });
+
+  this.ast.children = [namespace];
+  
+  return Namespace.locate(this.ast.children, name);
+}
+
+/**
+ * Add usegroup
+ * @param {String}
+ * @return {Writer}
+ */
+Writer.prototype.addUsegroup = usegroup.add;
+
+/**
  * Finds a namespace
  * @param {String} name
  * @return {Namespace|Null}
@@ -81,6 +111,10 @@ Writer.prototype.nsLocator = function(name) {
  * @return {Class|Null}
  */
 Writer.prototype.findClass = function(name) {
+  if (!name) {
+    return Class.locate(this.ast.children);
+  }
+
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findClass(ns[0]);
   return Class.locate(this.ast.children, ns[0]);
@@ -102,6 +136,10 @@ Writer.prototype.findFunction = function(name) {
  * @return {Trait|Null}
  */
 Writer.prototype.findTrait = function(name) {
+  if (!name) {
+    return Trait.locate(this.ast.children);
+  }
+
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findTrait(ns[0]);
   return Trait.locate(this.ast.children, ns[0]);
@@ -112,6 +150,10 @@ Writer.prototype.findTrait = function(name) {
  * @return {Interface|Null}
  */
 Writer.prototype.findInterface = function(name) {
+  if (!name) {
+    return Interface.locate(this.ast.children);
+  }
+
   var ns = this.nsLocator(name);
   if (ns[1]) return ns[1].findInterface(ns[0]);
   return Interface.locate(this.ast.children, ns[0]);

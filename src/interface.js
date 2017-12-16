@@ -35,7 +35,6 @@ Interface.prototype.setExtends = function(name) {
     return this;
 };
 
-
 /**
  * Sets a constant value
  */
@@ -101,7 +100,7 @@ Interface.prototype.setMethod = function(name, args, body, flags) {
  */
 Interface.locate = function(ast, name) {
   return filter(ast, 'interface', function(node) {
-    if (node.name === name) {
+    if (!name || node.name === name) {
       return new Interface(node);
     }
   });
