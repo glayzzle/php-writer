@@ -1,3 +1,23 @@
+## [Version 3.0.0](https://github.com/glayzzle/php-writer/releases/tag/v3.0.0) (2017-12-16)
+
+### Breaking changes
+
+- Added search without a name; Added traits to class.: [`e810228`](https://github.com/glayzzle/php-writer/commit/e810228)
+
+### New features
+
+- Refactored tests; Added traits to trait.: [`e5cfc7d`](https://github.com/glayzzle/php-writer/commit/e5cfc7d)
+- Usegroup addition incapsulated and added to writer, not only namespace.: [`36d9834`](https://github.com/glayzzle/php-writer/commit/36d9834)
+
+### Bug fixes
+
+- Fixed namespace tests.: [`5ad320e`](https://github.com/glayzzle/php-writer/commit/5ad320e)
+- Added '#addNamespace' test.: [`2c56d87`](https://github.com/glayzzle/php-writer/commit/2c56d87)
+- Fixed typo in Namespace#addUsegroup.: [`ff096b8`](https://github.com/glayzzle/php-writer/commit/ff096b8)
+- fix coverage stats: [`0ce6702`](https://github.com/glayzzle/php-writer/commit/0ce6702)
+
+[...full changes](https://github.com/glayzzle/php-writer/compare/v2.0.0...v3.0.0)
+
 ## [Version 2.0.0](https://github.com/glayzzle/php-writer/releases/tag/v2.0.0) (2017-11-1)
 
 ### Breaking changes
