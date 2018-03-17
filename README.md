@@ -66,7 +66,7 @@ All the examples assume that you have already loaded the file like in the [examp
 ##### Find a function and set its body value:
 ```js
 var myPhpFile = new writer(contents, options);
-myPhpFile.findFunction('foo').setBody('return $a + $b');
+myPhpFile.findFunction('foo').setCode('return $a + $b');
 ```
 
 ##### Find a class and set a property value:
