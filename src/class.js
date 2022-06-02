@@ -156,12 +156,18 @@ Class.prototype.getMethod = function(name) {
 /**
  * Appends or update an function
  */
-Class.prototype.setMethod = function(name, args, body, flags) {
+Class.prototype.setMethod = function(name, args, body, flags, returnType) {
+    if (typeof returnType !== 'undefined') {
+        if (returnType[0] !== ':') {
+            returnType = ':' + returnType;
+        }
+    }
+    
     var method = this.getMethod(name);
     if (!method) {
         // append the function
         var ast = parser.parseEval('class a { \n' +
-            flags + ' function ' + name + '(' + args +  ') {\n' +
+            flags + ' function ' + name + '(' + args +  ') '+ returnType + '{\n' +
                 body + '\n' +
             '}\n' +
         ' }');
@@ -170,9 +176,10 @@ Class.prototype.setMethod = function(name, args, body, flags) {
         );
     } else {
         // update the function
-        if (typeof flags !== 'undefined') method.setFlags(flags);
+        if (typeof flags !== 'undefined') method.setVisibility(flags);
         if (typeof args !== 'undefined') method.setArgs(args);
         if (typeof body !== 'undefined') method.setCode(body);
+        if (typeof returnType !== 'undefined') method.setReturnType(returnType);
     }
     return this;
 };
