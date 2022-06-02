@@ -74,3 +74,13 @@ myPhpFile.findFunction('foo').setCode('return $a + $b');
 var myPhpFile = new writer(contents, options);
 myPhpFile.findClass('Foo_Class').setProperty('bar', 'foo-bar');
 ```
+
+##### Find a class and create a new method:
+
+If the method is not present on the class, it will be created. Otherwise, it will be overwritten.
+
+```js
+var myPhpFile = new writer(contents, options);
+myPhpFile.findClass('Foo_Class').setMethod('test', 'int $test = 0', 'return $test;', 'private', '?int');
+```
+
